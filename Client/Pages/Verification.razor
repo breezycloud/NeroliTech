@@ -44,11 +44,10 @@
                     @if (@dialogTitle == "Valid")
                     {
                         <MatButton OnClick="@(e => { dialogIsOpen = false; })">Close</MatButton>
-                        <MatButton OnClick="@(e => { dialogIsOpen = false; })">View document</MatButton>
+                        <MatButton OnClick="@(e => { dialogIsOpen = false; })">OK</MatButton>
                     }
                     else if(@dialogTitle == "Verifying")
                     {
-                        
                     }
                     else
                     {
@@ -89,22 +88,15 @@
     {
         Loading();
         StateHasChanged();
-        await Task.Delay(2000);
         resultText = result;
-
-        try
-        {
-            declaration = await Http.GetFromJsonAsync<ExporterDeclaration>($"api/Declaration/{resultText}");
-            StateHasChanged();
-
-            SuccessInfo();
-        }
-        catch (Exception)
-        {
+        await Task.Delay(500);
+        HttpResponseMessage response;
+        response = await Http.GetAsync($"api/Declaration/{resultText}");
+        StateHasChanged();
+        if (!response.IsSuccessStatusCode)
             ErrorInfo();
-            StateHasChanged();
-
-        }
+        else
+            SuccessInfo();
     }
 
     void SuccessInfo()
