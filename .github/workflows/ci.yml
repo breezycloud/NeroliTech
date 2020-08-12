@@ -18,7 +18,7 @@ jobs:
 
         # Generate the website
         - name: Publish
-          run: dotnet publish nerolitech.client.csproj --configuration Release
+          run: dotnet publish ~/NeroliTech/Client/NeroliTech.Client.csproj --configuration Release
 
         # Publish the website
         - name: GitHub Pages action
