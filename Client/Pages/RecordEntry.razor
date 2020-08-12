@@ -465,17 +465,17 @@
             switch (tabIndex)
             {
                 case 0:
-                    await Http.PostAsJsonAsync("api/Exporters", exporterDeclaration);
+                    //await Http.PostAsJsonAsync("api/Exporters", exporterDeclaration);
                     dialogIsOpen = false;
                     tabIndex = tabIndex < 3 ? tabIndex + 1 : 0;
                     break;
                 case 1:
-                    await Http.PostAsJsonAsync("api/ShippingDetails", GetShippingDetails(cci));
+                    //await Http.PostAsJsonAsync("api/ShippingDetails", GetShippingDetails(cci));
                     dialogIsOpen = false;
                     tabIndex = tabIndex < 3 ? tabIndex + 1 : 0;
                     break;
                 case 2:
-                    await Http.PostAsJsonAsync("api/InspectionFindings", GetInspectionFindings(cci));
+                    //await Http.PostAsJsonAsync("api/InspectionFindings", GetInspectionFindings(cci));
                     tabIndex = tabIndex < 3 ? tabIndex + 1 : 0;
                     SuccessInfo();
                     await OnInitializedAsync();

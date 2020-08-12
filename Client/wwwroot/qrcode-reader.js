@@ -3,6 +3,7 @@
     document.getElementById('result').textContent = 'Code reader initialized'    
     codeReader.decodeFromInputVideoDevice(undefined, 'video').then((result) => {
         var content = result.text
+        console.log(result.text)
         document.getElementById('result').textContent = 'Success'
         dotNetObject.invokeMethodAsync('LoadItem', content);
     }).catch((err) => {
