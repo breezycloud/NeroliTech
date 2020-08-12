@@ -14,10 +14,6 @@ jobs:
           with:
             dotnet-version: 3.1.x
 
-        # Run Demo
-        - name: Demo
-          run: dotnet Demo
-
         # Generate the website
         - name: Publish
           run: dotnet publish nerolitech.csproj --configuration Release
