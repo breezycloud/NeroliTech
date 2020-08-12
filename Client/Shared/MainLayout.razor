@@ -1,0 +1,52 @@
+﻿@inherits LayoutComponentBase
+
+
+<MatAppBarContainer>
+    <MatAppBar Fixed="true">
+        <MatAppBarRow>
+            <MatAppBarSection>
+                <MatIconButton Icon="menu" OnClick="@((e) => ButtonClicked())"></MatIconButton>
+                <MatAppBarTitle>Neroli Technologies Limited</MatAppBarTitle>
+            </MatAppBarSection>
+        </MatAppBarRow>
+    </MatAppBar>
+</MatAppBarContainer>
+<MatAppBarContent>
+    <MatDrawerContainer>
+        <MatDrawer @bind-Opened="@Opened" Mode="@MatDrawerMode.Modal">
+            <MatListGroup>
+                <MatList>
+                    <MatListItem Href="recordentry">
+                        Add Data
+                    </MatListItem>
+                    <MatListItem Href="fetchdata">
+                        View Records
+                    </MatListItem>
+                </MatList>
+            </MatListGroup>
+        </MatDrawer>
+    </MatDrawerContainer>
+    <MatDrawerContent>
+        <div class="content px-4">
+            @Body
+        </div>        
+    </MatDrawerContent>
+</MatAppBarContent>
+
+@code
+{
+    public bool Opened { get; set; } = false;
+
+    void ButtonClicked()
+    {
+        if (!Opened)
+        {
+            Opened = true;
+        }
+        else
+        {
+            Opened = false;
+        }
+    }
+
+}

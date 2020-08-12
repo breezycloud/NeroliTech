@@ -1,0 +1,131 @@
+﻿@layout ExternalVerificatorLayout
+@page "/verification"
+@using System.Net.Http
+@inject HttpClient Http
+@inject IJSRuntime JSRuntime
+@using NeroliTech.Shared
+
+
+
+    <center>
+        <h3>Clean Certificate of Inspection - Checker</h3>
+        <br />
+        <p>Click Start to Scan Qr Code </p>
+        <br />
+        <div class="row justify-content-center">
+            <video id="video"
+                   class="col-auto"
+                   height="300"
+                   style="border: 1px solid gray">
+            </video>
+        </div>
+        <br />
+        <div>
+            <MatDialog @bind-IsOpen="@dialogIsOpen">
+                <MatDialogTitle>@dialogTitle</MatDialogTitle>
+                <MatDialogContent>
+                    @if (@dialogTitle == "Valid")
+                    {
+                        <p>@dialogContent</p>
+                    }
+                    else if (@dialogTitle == "Verifying")
+                    {
+                        <p>
+                            <Skclusive.Material.Progress.CircularProgress Color="Color.Secondary">
+                            </Skclusive.Material.Progress.CircularProgress>
+                        </p>
+                    }
+                    else
+                    {
+                        <p>@dialogContent</p>
+                    }
+                </MatDialogContent>
+                <MatDialogActions>
+                    @if (@dialogTitle == "Valid")
+                    {
+                        <MatButton OnClick="@(e => { dialogIsOpen = false; })">Close</MatButton>
+                        <MatButton OnClick="@(e => { dialogIsOpen = false; })">View document</MatButton>
+                    }
+                    else if(@dialogTitle == "Verifying")
+                    {
+                        
+                    }
+                    else
+                    {
+                        <MatButton OnClick="@(e => { dialogIsOpen = false; })">Close</MatButton>
+                    }
+                </MatDialogActions>
+            </MatDialog>
+        </div>
+        <div class="row m-1 justify-content-center">
+            <pre><code id="result"></code></pre>
+        </div>
+        <br />
+        <div class="row justify-content-center">
+            <div class="col-2">
+                <MatButton @onclick="DecodeBarcode" Raised="true" Class="form-control">Start</MatButton>
+            </div>
+        </div>
+    </center>
+
+@code {
+
+    public string resultText { get; set; }
+
+    bool dialogIsOpen = false;
+    public string dialogTitle { get; set; }
+    public string dialogContent { get; set; }
+
+    public ExporterDeclaration declaration;
+
+    private void DecodeBarcode()
+    {
+        var dotNetReference = DotNetObjectReference.Create(this);
+        JSRuntime.InvokeVoidAsync("decodeBarcode", dotNetReference);
+    }
+
+    [JSInvokable("LoadItem")]
+    public async Task GetInput(string result)
+    {
+        Loading();
+        StateHasChanged();
+        await Task.Delay(2000);
+        resultText = result;
+
+        try
+        {
+            declaration = await Http.GetFromJsonAsync<ExporterDeclaration>($"api/Declaration/{resultText}");
+            StateHasChanged();
+
+            SuccessInfo();
+        }
+        catch (Exception)
+        {
+            ErrorInfo();
+            StateHasChanged();
+
+        }
+    }
+
+    void SuccessInfo()
+    {
+        dialogIsOpen = false;
+        dialogIsOpen = true;
+        dialogTitle = "Valid";
+        dialogContent = "Valid CCI Number!";
+    }
+
+    void ErrorInfo()
+    {
+        dialogIsOpen = false;
+        dialogIsOpen = true;
+        dialogTitle = "Invalid";
+        dialogContent = "Invalid CCI Number";
+    }
+
+    void Loading()
+    {
+        dialogIsOpen = true;
+        dialogTitle = "Verifying";
+    }
+}

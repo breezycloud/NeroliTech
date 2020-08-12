@@ -1,0 +1,575 @@
+﻿@page  "/recordentry"
+@using NeroliTech.Shared
+@using System.Net.Http
+@inject HttpClient Http
+
+<h3>Data Entry</h3>
+
+<center>
+    <div class="col-9 card">
+        <center>
+                <MatTabGroup @bind-ActiveIndex="@tabIndex">
+                    <MatTab Label="Exporter Declaration">
+                        <EditForm Model="@exporterDeclaration" OnValidSubmit="@SaveEntry">
+                            <br />
+                        <div>
+                            <center>
+                                <div class="row">
+                                    <div class="col-4 align-items-center">
+                                        <MatTextField Label="CCI No" Dense="true" @bind-Value="@exporterDeclaration.CciNo" Class="form-control" />
+                                        <ValidationMessage For="@(() => exporterDeclaration.CciNo)" />
+                                    </div>
+                                </div>
+                            </center>
+                            <br />
+                            <div class="row">
+                                <div class="col-4">
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.NxpFormNo" Label="N.X.P Form No" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.NxpFormNo)" />
+                                </div>
+                                <div class="col-4">
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.NepcNo" Label="N.E.P.C No" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.NepcNo)" />
+                                </div>
+                                <div class="col-4">
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.Year" Label="Year" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.Year)" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-4">
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.HsCode" Label="H.S Code" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.HsCode)" />
+                                </div>
+                                <div class="col-4">
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.Origin" Label="Origin" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.Origin)" />
+                                </div>
+                                <div class="col-4">
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.Date" Label="Date" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.Date)" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-6">
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.Exporter" Label="Exporter Name" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.Exporter)" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.ExporterAddress" Label="Exporter Address" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.ExporterAddress)" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.ExporterRcNo" Label="Exporter RC No." Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.ExporterRcNo)" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.ExporterBankName" Label="Exporter Bank Name" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.ExporterBankName)" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.ExporterBankAddress" Label="Bank Address" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.ExporterBankAddress)" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.ExporterBankReference" Label="Bank Reference" Class="form-control" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.ImporterName" Label="Importer Name" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.ImporterName)" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.ImporterAddress" Label="Importer Address" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.ImporterAddress)" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.ImporterBank" Label="Importer Bank Name" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.ImporterBank)" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.ImporterBankAddress" Label="Bank Address" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.ImporterBankAddress)" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.ImporterBankReference" Label="Bank Reference" Class="form-control" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.GoodToExport" Label="Goods To Export" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.GoodToExport)" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.Units" Label="Units" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.Units)" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.Quantity" Label="Quantity" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.Quantity)" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.UnitPrice" Label="Unit Price" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.UnitPrice)" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.ExporterInvoiceNo" Label="Invoice No" Class="form-control" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.InvoiceDate" Label="Invoice Date" Class="form-control" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.BasisOfSale" Label="Basis Of Sale" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.BasisOfSale)" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.PaymentTerms" Label="Payment Terms" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.PaymentTerms)" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.Currency" Label="Currency" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.Currency)" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.ExporterFobInvoiceValue" Label="Exporter FOB Invoice Value" Class="form-control" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.FreightCharges" Label="Freight Charges" Class="form-control" />
+                                    <ValidationMessage For="@(() => exporterDeclaration.FreightCharges)" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.InsuranceCharges" Label="Insurance Charges" Class="form-control" />
+                                </div>
+                                <div class="col-6">
+                                    <MatTextField Dense="true" @bind-Value="@exporterDeclaration.TotalInvoiceValue" Label="Total Invoice Value" Class="form-control" />
+                                </div>
+                            </div>
+                            <div>
+                                <br />
+                            </div>
+                            <div class="row">
+                                <div class="col-6 align-items-start">
+
+                                </div>
+                                <div class="col-6 align-items-end">
+                                    <MatButton Type="submit" Raised="true" Class="form-control">Next</MatButton>
+                                </div>
+                            </div>
+                            <div>
+                                <br />  
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-6 align-items-center">
+                                    <MatProgressBar Indeterminate="true" Class="@ProgressBarVisibilityCSS" ></MatProgressBar>
+                                </div>
+                            </div>
+                            <div>
+                                <br />
+                            </div>
+                        </div>
+                        </EditForm>
+                    </MatTab>
+                    <MatTab Label="Shipping Details">
+                        <EditForm Model="@shippingDetails" OnSubmit="@SaveEntry">
+                            <br />
+                            <div class="row">
+                                <div class="col-6">
+                                    <MatTextField Dense="true" @bind-Value="@shippingDetails.ShipmentDate" Label="Shipment Date" Class="form-control" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@shippingDetails.ShippingAgent" Label="Shipping Agent" Class="form-control" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@shippingDetails.CarrierVessel" Label="Carrier/Vessels" Class="form-control" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@shippingDetails.LoadingRefNo" Label="Loading Ref Number" Class="form-control" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <MatTextField Dense="true" @bind-Value="@shippingDetails.ExitPoint" Label="Exit Point" Class="form-control" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@shippingDetails.Destination" Label="Destination" Class="form-control" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <MatTextField Dense="true" @bind-Value="@shippingDetails.ContainerNo" Label="Container Number" Class="form-control" />
+                                    <div>
+                                        <br />
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 align-content-start">
+                                            <MatButton Raised="true" OnClick="@PreviousTab" Class="form-control">Previous</MatButton>
+                                        </div>
+                                        <div class="col-6 align-items-end">
+                                            <MatButton Type="Submit" Raised="true" Class="form-control">Next</MatButton>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </EditForm>
+                    </MatTab>
+            <MatTab Label="Inspection Findings">
+                <EditForm Model="@inspectionFindings" OnSubmit="@SaveEntry">
+                    <br />
+                    <div class="row">
+                        <div class="col-6">
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.HsCode" Label="H.S Code" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.GoodToExport" Label="Goods To Export" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.Units" Label="Units" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.InspectionDate" Label="Inspection Date" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.Quantity" Label="Quantity" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.UnitPrice" Label="Unit Price" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.PackagingDetail" Label="Packaging Details" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.GrossWeight" Label="Gross Weight" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.Quality" Label="Quality" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.NetWeight" Label="Net Weight" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.ActualNessCharges" Label="Actual NESS Charges" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.BalancePaid" Label="Balance Paid" Class="form-control" />
+                        </div>
+                        <div class="col-6">
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.TotalFobGoodsValue" Label="Total FOB Goods Value" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.TotalFobValueWord" Label="Total FOB Goods Value" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.TotalFreightCharges" Label="Total Freight Charges" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.TotalInsuranceCharge" Label="Total Insurance Charges" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.BasisOfSale" Label="Basis of Sale" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.ForexProceedDueTransaction" Label="Forex Proceeds Due to Transaction" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.ExchangeDate" Label="Exchange Date" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.ReceiptNo" Label="Receipt Number" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.Currency" Label="Currency" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.NessChargePayable" Label="NESS Charges Payable" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                            <MatTextField Dense="true" @bind-Value="@inspectionFindings.ReceiptNo2" Label="Receipt Number" Class="form-control" />
+                            <div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p>&nbsp;</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 align-content-start">
+                            <MatButton Raised="true" OnClick="@PreviousTab" Class="form-control">Previous</MatButton>
+                        </div>
+                        <div class="col-6 align-items-end">
+                            <MatButton Raised="true" OnClick="@SaveEntry" Class="form-control">Save</MatButton>
+                        </div>
+                    </div>
+
+                </EditForm>
+            </MatTab>
+            </MatTabGroup>
+            <div>
+                <MatDialog @bind-IsOpen="@dialogIsOpen">
+                    <MatDialogTitle>@displayNotification</MatDialogTitle>
+                    <MatDialogContent>
+                        @if (@displayNotification == "Confirmation")
+                        {
+                            <p>Do you wish to add new record?</p>   
+                        }
+                        else if (@displayNotification == "Success")
+                        {
+                            <p>@notificationMessage</p>
+                        }
+                        else if (@displayNotification == "Loading")
+                        {
+                            <p><Skclusive.Material.Progress.CircularProgress Color="Color.Secondary">
+                                </Skclusive.Material.Progress.CircularProgress>
+                            </p>
+                        }
+                        else
+                        {
+                            <p>@notificationMessage</p>
+                        }
+                    </MatDialogContent>
+                    <MatDialogActions>
+                        @if (@displayNotification == "Confirmation")
+                        {
+                            <MatButton OnClick="@(e => { dialogIsOpen = false; })">No</MatButton>
+                            <MatButton OnClick="@SaveEntry">Yes</MatButton>
+                        }
+                        else if (@displayNotification == "Success")
+                        {
+                            <MatButton OnClick="@(e => { dialogIsOpen = false; })">Ok</MatButton>
+                        }
+                        else if (@displayNotification == "Loading")
+                        {
+                            <MatButton Style="visibility:hidden">OK</MatButton>
+                        }
+                        else
+                        {
+                            <MatButton OnClick="@(e => { dialogIsOpen = false; })">Ok</MatButton>
+                        }
+                    </MatDialogActions>
+                </MatDialog>
+            </div>
+        </center>
+    </div>
+    <div>
+        <p>&nbsp;</p>
+    </div>
+</center>
+
+
+@code {
+    public int tabIndex = 0;
+    public string displayNotification { get; set; }
+    public string notificationMessage { get; set; }
+
+    private bool visibility = false;
+    public string cci { get; set; }
+    private string ProgressBarVisibilityCSS => visibility ? "visible" : "collapse";
+
+
+    bool dialogIsOpen = false;
+    public ExporterDeclaration exporterDeclaration;
+
+    public ExporterShippingDetails shippingDetails;
+    public PreshipmentInspectionFindings inspectionFindings;
+
+    public MouseEventArgs eventArgs;
+
+
+    protected override Task OnInitializedAsync()
+    {
+        exporterDeclaration = new ExporterDeclaration();
+        shippingDetails = new ExporterShippingDetails();
+        inspectionFindings = new PreshipmentInspectionFindings();
+        return base.OnInitializedAsync();
+    }
+
+
+    void OpenDialog()
+    {
+        dialogIsOpen = true;
+        displayNotification = "Confirmation";
+    }
+
+    private async Task SaveEntry()
+    {
+        dialogIsOpen = false;
+        try
+        {
+
+            cci = exporterDeclaration.CciNo;
+            if (string.IsNullOrEmpty(cci))
+            {
+                return;
+            }
+
+            Loading();
+            switch (tabIndex)
+            {
+                case 0:
+                    await Http.PostAsJsonAsync("api/Exporters", exporterDeclaration);
+                    dialogIsOpen = false;
+                    tabIndex = tabIndex < 3 ? tabIndex + 1 : 0;
+                    break;
+                case 1:
+                    await Http.PostAsJsonAsync("api/ShippingDetails", GetShippingDetails(cci));
+                    dialogIsOpen = false;
+                    tabIndex = tabIndex < 3 ? tabIndex + 1 : 0;
+                    break;
+                case 2:
+                    await Http.PostAsJsonAsync("api/InspectionFindings", GetInspectionFindings(cci));
+                    tabIndex = tabIndex < 3 ? tabIndex + 1 : 0;
+                    SuccessInfo();
+                    await OnInitializedAsync();
+                    break;
+            }
+        }
+        catch (Exception)
+        {
+            dialogIsOpen = false;
+            ErrorInfo();
+        }
+
+    }
+
+    void SuccessInfo()
+    {
+        dialogIsOpen = true;
+        displayNotification = "Success";
+        notificationMessage = "Record successfully saved!";
+    }
+
+    void ErrorInfo()
+    {
+        dialogIsOpen = true;
+        notificationMessage = "Something went wrong!";
+    }
+
+    void Loading()
+    {
+        dialogIsOpen = true;
+        displayNotification = "Loading";
+    }
+
+
+    void ChangeTab(MouseEventArgs e)
+    {
+        tabIndex = tabIndex < 3 ? tabIndex + 1 : 0;
+    }
+
+    void PreviousTab(MouseEventArgs e)
+    {
+        tabIndex = tabIndex - 1;
+    }
+
+
+    private ExporterShippingDetails GetShippingDetails(string cci)
+    {
+        ExporterShippingDetails exporterShippingDetails = new ExporterShippingDetails
+        {
+            Id = Guid.NewGuid(),
+            CciNo = cci,
+            ShipmentDate = shippingDetails.ShipmentDate,
+            ShippingAgent = shippingDetails.ShippingAgent,
+            CarrierVessel = shippingDetails.CarrierVessel,
+            LoadingRefNo = shippingDetails.LoadingRefNo,
+            ExitPoint = shippingDetails.ExitPoint,
+            Destination = shippingDetails.Destination,
+            ContainerNo = shippingDetails.ContainerNo
+        };
+
+        return exporterShippingDetails;
+    }
+
+    private PreshipmentInspectionFindings GetInspectionFindings(string cci)
+    {
+        PreshipmentInspectionFindings preshipmentInspectionFindings = new PreshipmentInspectionFindings
+        {
+            Id = Guid.NewGuid(),
+            CciNo = cci,
+            InspectionDate = inspectionFindings.InspectionDate,
+            PackagingDetail = inspectionFindings.PackagingDetail,
+            HsCode = inspectionFindings.HsCode,
+            BasisOfSale = inspectionFindings.BasisOfSale,
+            GoodToExport = inspectionFindings.GoodToExport,
+            Units = inspectionFindings.Units,
+            Quantity = inspectionFindings.Quantity,
+            UnitPrice = inspectionFindings.UnitPrice,
+            Quality = inspectionFindings.Quality,
+            NetWeight = inspectionFindings.NetWeight,
+            GrossWeight = inspectionFindings.GrossWeight,
+            TotalFobGoodsValue = inspectionFindings.TotalFobGoodsValue,
+            TotalFobValueWord = inspectionFindings.TotalFobValueWord,
+            TotalFreightCharges = inspectionFindings.TotalFreightCharges,
+            TotalInsuranceCharge = inspectionFindings.TotalInsuranceCharge,
+            ForexProceedDueTransaction = inspectionFindings.ForexProceedDueTransaction,
+            ExchangeDate = inspectionFindings.ExchangeDate,
+            Currency = inspectionFindings.Currency,
+            ExchangeRate = inspectionFindings.ExchangeRate,
+            ReceiptNo = inspectionFindings.ReceiptNo,
+            NessChargePayable = inspectionFindings.NessChargePayable,
+            ActualNessCharges = inspectionFindings.ActualNessCharges,
+            ReceiptNo2 = inspectionFindings.ReceiptNo2,
+            BalancePaid = inspectionFindings.BalancePaid
+        };
+        return preshipmentInspectionFindings;
+    }
+}

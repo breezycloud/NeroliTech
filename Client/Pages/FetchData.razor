@@ -1,0 +1,84 @@
+@page "/fetchdata"
+@using NeroliTech.Shared;
+@inject HttpClient Http
+@inject IJSRuntime JSRuntime
+@using NeroliTech.Client.Report;
+
+<h1>Documents</h1>
+
+@if (declarations == null)
+{
+    <div class="col-4 justify-content-start">
+        <MatProgressBar Indeterminate="true" />
+    </div>
+    <div>
+        <br />
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>CCI No</th>
+                <th>Exporter</th>
+                <th>Goods Exported</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var declaration in declarations)
+            {
+                <tr>
+                    <td>@declaration.CciNo</td>
+                    <td>@declaration.Exporter</td>
+                    <td>@declaration.GoodToExport</td>
+                    <td>@declaration.Date.ToShortDateString()</td>
+                    <td>
+                        <a style="text-underline-position:below; cursor:pointer; color:blue; font-weight:bold;"
+                           @onclick="(() => EditDocument(declaration.CciNo))">Edit</a>
+                        <a style="text-underline-position:below; cursor:pointer; color:blue; font-weight:bold;"
+                           @onclick="(() => DeleteDocument(declaration.CciNo))">Delete</a>
+                        <a style="text-underline-position:below; cursor:pointer; color:blue; font-weight:bold;"
+                           @onclick="(() => ViewDocument(declaration.CciNo))">View</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+@code {
+
+    private ExporterDeclaration declaration { get; set; }
+    private ExporterDeclaration[] declarations { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        declarations = await Http.GetFromJsonAsync<ExporterDeclaration[]>("api/Declaration");
+    }
+
+    private async Task EditDocument(string cci)
+    {
+        //await Http.DeleteAsync($"api/Exporters/{cci}");
+        //await Http.DeleteAsync($"api/ShippingDetails/{cci}");
+        //await Http.DeleteAsync($"api/InspectionFindings/{cci}");
+    }
+    private async Task DeleteDocument(string cci)
+    {
+        //    await Http.DeleteAsync($"api/Exporters/{cci}");
+        //    await Http.DeleteAsync($"api/ShippingDetails/{cci}");
+        //    await Http.DeleteAsync($"api/InspectionFindings/{cci}");
+        //}
+    }
+
+
+    private async void ViewDocument(string cci)
+    {
+        ReportCCI report = new ReportCCI();
+        IEnumerable<ExporterDeclaration> content = declarations.Where(i => i.CciNo == cci);
+        await JSRuntime.InvokeAsync<ExporterDeclaration>("saveAsFile", "Report.pdf", Convert.ToBase64String(report.Report(content)));
+    }
+}

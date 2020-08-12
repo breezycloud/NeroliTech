@@ -1,0 +1,98 @@
+﻿@layout ExternalVerificatorLayout
+@page "/externalcciverification"
+@using System.Net.Http
+@inject HttpClient Http
+@using NeroliTech.Shared
+
+
+
+<center>
+    <div>
+        <br /> <br />
+    </div>
+    <div>
+        <h2>CCI Checker</h2>
+    </div>
+
+    <div>
+        <br /> <br /><br />
+    </div>
+    <div class="col-8 justify-content-center">
+        <div> <br /><br /><br /></div>
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <EditForm Model="this" OnValidSubmit="VerifyCCI">
+                    <MatTextField PlaceHolder="Enter CCI Number" FullWidth="true" @bind-Value="@cciNumber" Class="form-control col-8" />
+                </EditForm>
+                <div class="row justify-content-center">
+                    <div class="col-5">
+                        <MatProgressBar Style="@ProgressBarVisibilityCSS" />
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <div>
+            <MatDialog @bind-IsOpen="@dialogIsOpen">
+                <MatDialogTitle>@dialogTitle</MatDialogTitle>
+                <MatDialogContent>
+                    @if (@dialogTitle == "Valid")
+                    {
+                        <p>@dialogContent</p>
+                    }
+                    else
+                    {
+                        <p>@dialogContent</p>
+                    }
+                </MatDialogContent>
+                <MatDialogActions>
+                    @if (@dialogTitle == "Valid")
+                    {
+                        <MatButton OnClick="@(e => { dialogIsOpen = false; })">Close</MatButton>
+                        <MatButton OnClick="@(e => { dialogIsOpen = false; })">View document</MatButton>
+                    }
+                    else
+                    {
+                        <MatButton OnClick="@(e => { dialogIsOpen = false; })">Close</MatButton>
+                    }
+                </MatDialogActions>
+            </MatDialog>
+        </div>
+    </div>
+</center>
+
+@code {
+
+    private string cciNumber { get; set; }
+
+    private bool visibility = false;
+    private string ProgressBarVisibilityCSS => visibility ? "visibility:visibile" : "visibility:collapse";
+
+
+    bool dialogIsOpen = false;
+    public string dialogTitle { get; set; }
+    public string dialogContent { get; set; }
+    private ExporterDeclaration validDeclaration;
+
+    private async Task VerifyCCI()
+    {
+        visibility = true;
+        if (cciNumber.Length == 5)
+        {
+            try
+            {
+                validDeclaration = await Http.GetFromJsonAsync<ExporterDeclaration>($"api/Exporters/{cciNumber}");
+                dialogIsOpen = true;
+                dialogTitle = "Valid";
+                dialogContent = "This CCI Number is genuine";
+            }
+            catch (Exception)
+            {
+                dialogIsOpen = true;
+                dialogTitle = "Invalid";
+                dialogContent = "This CCI Number is invalid!";
+            }            
+            validDeclaration = null;
+        }
+        visibility = false;
+    }
+}

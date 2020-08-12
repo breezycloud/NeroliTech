@@ -1,0 +1,110 @@
+﻿@layout LoginLayout
+@page  "/"
+@using NeroliTech.Shared
+@inject NavigationManager NavigationManager
+@using System.Security.Claims
+@using System.Net.Http
+@inject HttpClient Http
+@using NeroliTech.Client.Services
+@using Newtonsoft.Json
+
+
+
+<center>
+    <div>
+        <br /> <br />
+    </div>
+    <div class="col-4 card justify-content-center">
+        <div>
+            <br />
+        </div>
+        <div class="row justify-content-center">
+            <img src="/icon-512.png" alt="Something is wrong" style="width:90px; height:90px;" />
+        </div>
+        <div class="row justify-content-center">
+            <EditForm Model="@user" OnValidSubmit="ValidateUser">
+                <div>
+                    <br /><br />
+                </div>
+                <div class="row justify-content-center">
+                    <span class="col-12"></span>
+                    <MatTextField Dense="true" Class="form-control col-10" @bind-Value="@user.Username" Label="Username" />
+                    <ValidationMessage For="@(() => user.Username)" />
+                </div>
+                <br />
+                <div class="row justify-content-center">
+                    <span class="col-12"></span>
+                    <MatTextField Type="Password" Dense="true" Class="form-control col-10" @bind-Value="@user.Password" Label="Password" />
+                    <ValidationMessage For="@(() => user.Password)" />
+                </div>
+                <br />
+                <div class="row justify-content-center">
+                    <span class="col-12"></span>
+                    <MatButton Label="Login" Raised="true" Class="form-control col-8" />
+                </div>
+            </EditForm>
+        </div>
+        <div class="col-12 row">
+            <div>
+                <br /><br /><br /><br />
+            </div>
+        </div>
+    </div>
+</center>
+
+@code {
+
+    private User user;
+    public string LoginMesssage { get; set; }
+    ClaimsPrincipal claimsPrincipal;
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    protected override void OnInitialized()
+    {
+        user = new User();
+        base.OnInitialized();
+    }
+
+
+    //protected override void OnInitialised()
+    //{
+    //    //user = new User();
+
+    //    //claimsPrincipal = (await authenticationStateTask).User;
+
+    //    //if (claimsPrincipal.Identity.IsAuthenticated)
+    //    //{
+    //    //    NavigationManager.NavigateTo("/index");
+    //    //}
+    //    //{
+    //    //    user.Username = "Admin";
+    //    //    user.Password = "SuperUser**";
+    //    //}
+
+    //}
+
+    private async Task<bool> ValidateUser()
+    {
+        //assume that user is valid
+        //call an API
+
+
+        NavigationManager.NavigateTo("/index");
+
+        //var returnedUser = await userService.LoginAsync(user);
+
+        //if (returnedUser.Username != null)
+        //{
+        //    await ((CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsAuthenticated(returnedUser);
+        //    NavigationManager.NavigateTo("/index");
+        //}
+        //else
+        //{
+        //    LoginMesssage = "Invalid username or password";
+        //}
+
+        return await Task.FromResult(true);
+    }
+}

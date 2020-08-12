@@ -1,0 +1,39 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+<div class="col-12 ">
+    <div class="row">
+        <MatAppBarContainer>
+            <MatAppBar Fixed="true">
+                <MatAppBarRow>
+                    <MatAppBarSection>
+                        <MatAppBarTitle>Neroli Technologies Limited</MatAppBarTitle>
+                    </MatAppBarSection>
+                    <MatAppBarSection Align="@MatAppBarSectionAlign.End">
+                       <MatButton Label="Verfiy CCI" Style="color:white;" Unelevated="true" OnClick="@NavigateToVerifyCCI"/>
+                    </MatAppBarSection>
+                </MatAppBarRow>
+            </MatAppBar>
+        </MatAppBarContainer>
+    </div>
+    <div>
+        <br /><br /><br /><br />
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div>
+                <br /><br />
+            </div>
+
+            @Body
+        </div>
+    </div>
+</div>
+
+@code{
+
+    private void NavigateToVerifyCCI()
+    {
+        NavigationManager.NavigateTo("Verification");
+    }
+
+}
