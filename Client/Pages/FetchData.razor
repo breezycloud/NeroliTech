@@ -60,13 +60,13 @@ else
         declarations = await Http.GetFromJsonAsync<ExporterDeclaration[]>("api/Declaration");
     }
 
-    private async Task EditDocument(string cci)
+    private void EditDocument(string cci)
     {
         //await Http.DeleteAsync($"api/Exporters/{cci}");
         //await Http.DeleteAsync($"api/ShippingDetails/{cci}");
         //await Http.DeleteAsync($"api/InspectionFindings/{cci}");
     }
-    private async Task DeleteDocument(string cci)
+    private void DeleteDocument(string cci)
     {
         //    await Http.DeleteAsync($"api/Exporters/{cci}");
         //    await Http.DeleteAsync($"api/ShippingDetails/{cci}");

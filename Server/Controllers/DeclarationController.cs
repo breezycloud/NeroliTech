@@ -30,6 +30,7 @@ namespace NeroliTech.Server.Controllers
             {
                 return NotFound();
             }
+            await Task.Delay(100);
             return Ok();
         }
 
