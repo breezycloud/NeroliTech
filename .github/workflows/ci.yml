@@ -18,6 +18,7 @@ jobs:
 
         # Generate the website
         - name: Publish
+          cp: wwwroot/index.html wwwroot/404.html
           run: dotnet publish --configuration Release
 
         # Publish the website
