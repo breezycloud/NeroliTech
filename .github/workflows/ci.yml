@@ -14,9 +14,11 @@ jobs:
           with:
             dotnet-version: 3.1.x
 
+    
+
         # Generate the website
         - name: Publish
-          run: dotnet publish nerolitech.csproj --configuration Release
+          run: dotnet publish nerolitech.client.csproj --configuration Release
 
         # Publish the website
         - name: GitHub Pages action
