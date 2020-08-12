@@ -1,0 +1,15 @@
+{
+  "name": "Neroli Tech",
+  "short_name": "Neroli Tech",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#03173d",
+  "icons": [
+    {
+      "src": "logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
